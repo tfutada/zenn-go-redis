@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/google/uuid"
 	"github.com/redis/go-redis/v9"
+
 	"time"
 )
 
@@ -19,7 +21,7 @@ func main() {
 
 	// Publish messages
 	for i := 0; i < 10; i++ {
-		msg := fmt.Sprintf("msg:%d", i)
+		msg := genKey()
 		err := rdb.Publish(ctx, "mychannel1", msg).Err()
 		if err != nil {
 			panic(err)
@@ -27,4 +29,13 @@ func main() {
 		fmt.Println("publish:", msg)
 		time.Sleep(1 * time.Second)
 	}
+}
+
+func genKey() string {
+	u, err := uuid.NewRandom()
+	if err != nil {
+		fmt.Printf("failed to generate UUID: %v", err)
+		panic(err)
+	}
+	return fmt.Sprintf("msg:%s", u.String())
 }

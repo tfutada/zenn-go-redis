@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/redis/go-redis/v9"
-	"time"
 )
 
 func main() {
@@ -23,7 +22,6 @@ func main() {
 	ch := pubsub.Channel(redis.WithChannelSize(0))
 
 	for msg := range ch {
-		time.Sleep(30 * time.Second)
 		fmt.Printf("receive: %v %v \n", msg.Channel, msg.Payload)
 	}
 	// unreachable here
