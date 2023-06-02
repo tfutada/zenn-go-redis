@@ -43,7 +43,7 @@ func main() {
 	var mm Message
 	u := json.Unmarshal([]byte(ret), &mm)
 	if u != nil {
-		fmt.Println("Error unmarshaling:", u)
+		fmt.Println("Error unmarshalling:", u)
 		return
 	}
 	fmt.Printf("%#v", mm)
